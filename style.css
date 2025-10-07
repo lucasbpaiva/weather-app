@@ -2,6 +2,7 @@
     --bg-color1: #212529;
     --bg-color2: #2a2b2d;
     --text-color: #fff;
+    --dimmed-text: #999;
     --accent-color: #ea6e4b;
 }
 
@@ -50,4 +51,50 @@ body {
 
 #locationBtn {
     background-color: var(--accent-color);
+}
+
+.card {
+    background-color: var(--bg-color2);
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.card p {
+    font-size: 14px;
+}
+
+.card-footer p {
+    color: var(--dimmed-text);
+    margin-bottom: 10px;
+}
+
+.card h2 {
+    font-size: 32px;
+    font-weight: 500;
+    margin: 5px 0;
+}
+
+.weather-data {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+.current-weather {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.forecast-item {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    place-items: center;
+    margin-bottom: 15px;
+}
+
+.icon-wrapper {
+    display: flex;
+    align-items: center;
 }
