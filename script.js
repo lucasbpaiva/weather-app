@@ -24,8 +24,10 @@ async function getWeatherData(location) {
 const cityInput = document.querySelector("#cityInput");
 const searchBtn = document.querySelector("#searchBtn");
 
-cityInput.addEventListener("change", () => {
-    getWeatherData(cityInput.value);
+cityInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+        getWeatherData(cityInput.value);
+    }
 });
 
 searchBtn.addEventListener("click", () => {
