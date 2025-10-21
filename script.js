@@ -10,6 +10,7 @@ async function getWeatherData(location) {
     const response    = await fetch(url);
     const weatherData = await response.json();
 
+    const address    = weatherData.resolvedAddress;
     const currentTemp = weatherData.currentConditions.temp;
     const sunrise     = weatherData.currentConditions.sunrise.slice(0, -3);
     const sunset      = weatherData.currentConditions.sunset.slice(0, -3);
@@ -19,7 +20,7 @@ async function getWeatherData(location) {
     const humidity    = weatherData.currentConditions.humidity;
     const feelsLike   = weatherData.currentConditions.feelslike;
 
-    const processedData = { currentTemp, sunrise, sunset, visibility, windSpeed, pressure, humidity, feelsLike, };
+    const processedData = { currentTemp, sunrise, sunset, visibility, windSpeed, pressure, humidity, feelsLike, address, };
     console.log(weatherData);
 
     return processedData;
@@ -42,6 +43,12 @@ function updateDisplay() {
     weatherData = getWeatherData(cityInput.value); // This is a promise!
     updateSunriseSunset();
     updateWindSpeed();
+    updateVisibility();
+    updateHumidity();
+    updatePressure();
+    updateFeelsLike();
+    updateTemperature();
+    updateLocation();
 }
 
 const sunriseDisplay = document.querySelector("#sunriseDisplay");
@@ -59,5 +66,53 @@ const windSpeedVal = document.querySelector("#windSpeedVal");
 function updateWindSpeed() {
     weatherData.then((data) => {
         windSpeedVal.textContent = data.windSpeed + " km/h";
+    });
+}
+
+const visibility = document.querySelector("#visibilityVal");
+
+function updateVisibility() {
+    weatherData.then((data) => {
+        visibility.textContent = data.visibility + " km";
+    });
+}
+
+const humidity = document.querySelector("#humidityVal");
+
+function updateHumidity() {
+    weatherData.then((data) => {
+        humidity.textContent = data.humidity + " %";
+    });
+}
+
+const pressure = document.querySelector("#pressureVal");
+
+function updatePressure() {
+    weatherData.then((data) => {
+        pressure.textContent = data.pressure + " hPa";
+    });
+}
+
+const feelsLike = document.querySelector("#feelsLikeVal");
+
+function updateFeelsLike() {
+    weatherData.then((data) => {
+        feelsLike.textContent = data.feelsLike + "˚C";
+    });
+}
+
+const temperature = document.querySelector("#temperatureVal");
+
+function updateTemperature() {
+    weatherData.then((data) => {
+        temperature.textContent = data.currentTemp + "˚C";
+    });
+}
+
+const address = document.querySelector("#location");
+
+function updateLocation() {
+    weatherData.then((data) => {
+        address.textContent = data.address;
     });
 }
