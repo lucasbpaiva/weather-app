@@ -10,8 +10,9 @@ async function getWeatherData(location) {
     const response    = await fetch(url);
     const weatherData = await response.json();
 
-    const address    = weatherData.resolvedAddress;
+    const address     = weatherData.resolvedAddress;
     const currentTemp = weatherData.currentConditions.temp;
+    const conditions  = weatherData.currentConditions.conditions;
     const sunrise     = weatherData.currentConditions.sunrise.slice(0, -3);
     const sunset      = weatherData.currentConditions.sunset.slice(0, -3);
     const visibility  = weatherData.currentConditions.visibility;
@@ -19,8 +20,11 @@ async function getWeatherData(location) {
     const pressure    = weatherData.currentConditions.pressure;
     const humidity    = weatherData.currentConditions.humidity;
     const feelsLike   = weatherData.currentConditions.feelslike;
+    const uvindex     = weatherData.currentConditions.uvindex;
 
-    const processedData = { currentTemp, sunrise, sunset, visibility, windSpeed, pressure, humidity, feelsLike, address, };
+    const processedData = { 
+        currentTemp, conditions, sunrise, sunset, visibility, windSpeed, pressure, humidity, feelsLike, uvindex, address, 
+    };
     console.log(weatherData);
 
     return processedData;
@@ -47,8 +51,10 @@ function updateDisplay() {
     updateHumidity();
     updatePressure();
     updateFeelsLike();
+    updateUVindex();
     updateTemperature();
     updateLocation();
+    updateConditions();
 }
 
 const sunriseDisplay = document.querySelector("#sunriseDisplay");
@@ -114,5 +120,21 @@ const address = document.querySelector("#location");
 function updateLocation() {
     weatherData.then((data) => {
         address.textContent = data.address;
+    });
+}
+
+const uvindex = document.querySelector("#uvindexVal");
+
+function updateUVindex() {
+    weatherData.then((data) => {
+        uvindex.textContent = data.uvindex;
+    });
+}
+
+const conditions = document.querySelector("#conditions");
+
+function updateConditions() {
+    weatherData.then((data) => {
+        conditions.textContent = data.conditions;
     });
 }
