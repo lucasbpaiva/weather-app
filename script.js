@@ -21,9 +21,10 @@ async function getWeatherData(location) {
     const humidity    = weatherData.currentConditions.humidity;
     const feelsLike   = weatherData.currentConditions.feelslike;
     const uvindex     = weatherData.currentConditions.uvindex;
+    const days        = weatherData.days;
 
     const processedData = { 
-        currentTemp, conditions, sunrise, sunset, visibility, windSpeed, pressure, humidity, feelsLike, uvindex, address, 
+        currentTemp, conditions, sunrise, sunset, visibility, windSpeed, pressure, humidity, feelsLike, uvindex, address, days, 
     };
     console.log(weatherData);
 
@@ -55,6 +56,7 @@ function updateDisplay() {
     updateTemperature();
     updateLocation();
     updateConditions();
+    updateTenDayForecast();
 }
 
 const sunriseDisplay = document.querySelector("#sunriseDisplay");
@@ -87,7 +89,7 @@ const humidity = document.querySelector("#humidityVal");
 
 function updateHumidity() {
     weatherData.then((data) => {
-        humidity.textContent = data.humidity + " %";
+        humidity.textContent = data.humidity + "%";
     });
 }
 
@@ -95,7 +97,7 @@ const pressure = document.querySelector("#pressureVal");
 
 function updatePressure() {
     weatherData.then((data) => {
-        pressure.textContent = data.pressure + " hPa";
+        pressure.textContent = data.pressure;
     });
 }
 
@@ -103,7 +105,7 @@ const feelsLike = document.querySelector("#feelsLikeVal");
 
 function updateFeelsLike() {
     weatherData.then((data) => {
-        feelsLike.textContent = data.feelsLike + "˚C";
+        feelsLike.textContent = data.feelsLike + "˚";
     });
 }
 
@@ -111,7 +113,7 @@ const temperature = document.querySelector("#temperatureVal");
 
 function updateTemperature() {
     weatherData.then((data) => {
-        temperature.textContent = data.currentTemp + "˚C";
+        temperature.textContent = data.currentTemp + "˚";
     });
 }
 
@@ -132,9 +134,41 @@ function updateUVindex() {
 }
 
 const conditions = document.querySelector("#conditions");
+const largeWeatherIcon = document.querySelector(".weather-icon-large");
 
 function updateConditions() {
     weatherData.then((data) => {
         conditions.textContent = data.conditions;
+        largeWeatherIcon.src = `images/${data.conditions}.png`;
+    });
+}
+
+const forecastItems = document.querySelectorAll(".forecast-item");
+
+function updateTenDayForecast() {
+    weatherData.then((data) => {
+        let index = 0;
+        for (const item of forecastItems) {
+            if (index > 0) {
+                const weekday = item.querySelector(".weekday");
+                const date = new Date(data.days[index].datetime);
+                const weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                weekday.textContent = weekdays[date.getUTCDay()];
+            }
+
+            const weatherIcon = item.querySelector(".weather-icon");
+            let dailyConditions = data.days[index].conditions;
+            if (dailyConditions.includes(",")) {
+                dailyConditions = dailyConditions.split(",")[0];
+            }
+            weatherIcon.src = `images/${dailyConditions}.png`;
+
+            const tempMin = item.querySelector(".min");
+            const tempMax = item.querySelector(".max");
+            tempMin.textContent = data.days[index].tempmin + "˚";
+            tempMax.textContent = data.days[index].tempmax + "˚";
+
+            index++;
+        }
     });
 }
