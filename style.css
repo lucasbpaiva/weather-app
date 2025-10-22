@@ -78,11 +78,6 @@ hr {
     margin-bottom: 15px;
 }
 
-.card-footer p {
-    color: var(--text-color);
-    margin-bottom: 10px;
-}
-
 .card h2 {
     font-size: 32px;
     font-weight: 500;
@@ -111,14 +106,10 @@ hr {
 
 .forecast-item {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    place-items: center;
-    margin-bottom: 15px;
-}
-
-.icon-wrapper {
-    display: flex;
+    grid-template-columns: 85px repeat(3, 1fr);
     align-items: center;
+    column-gap: 10px;
+    margin-bottom: 15px;
 }
 
 .weather-right {
@@ -183,6 +174,7 @@ hr {
 .card-item {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .hourly-forecast {
