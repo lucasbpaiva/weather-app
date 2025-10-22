@@ -37,6 +37,7 @@ const searchBtn = document.querySelector("#searchBtn");
 cityInput.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
         updateDisplay();
+        cityInput.blur();
     }
 });
 
@@ -46,6 +47,7 @@ searchBtn.addEventListener("click", () => {
 
 function updateDisplay() {
     weatherData = getWeatherData(cityInput.value); // This is a promise!
+    cityInput.value = "";
     updateSunriseSunset();
     updateWindSpeed();
     updateVisibility();
