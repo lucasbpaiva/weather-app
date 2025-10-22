@@ -89,6 +89,14 @@ hr {
     margin: 5px 0;
 }
 
+.weather-icon-large {
+    width: 100px;
+}
+
+.weather-icon {
+    width: 50px;
+}
+
 .weather-data {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
