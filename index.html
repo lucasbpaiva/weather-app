@@ -24,73 +24,75 @@
                     <div class="current-weather">
                         <div class="details">
                             <h3 id="location">_________</h3>
-                            <h2 id="temperatureVal">__&degC</h2>
+                            <h2 id="temperatureVal">__&deg</h2>
+                            <p id="conditions">_____</p>
                         </div>
-                        <div class="weather-icon">
-                            <img src="https://openweathermap.org/img/wn/04d@2x.png" alt="">
+                        <div>
+                            <img class="weather-icon-large" src="" alt="">
                         </div>
-                    </div>
-                    <div class="card-footer">
-                        <p id="conditions">_____</p>
                     </div>
                 </div>
                 <div class="card">
-                    <h2>7 days forecast</h2>
+                    <h2>10-day forecast</h2>
                     <div class="forecast-item">
-                        <div class="icon-wrapper">
-                            <img src="https://openweathermap.org/img/wn/02d.png" alt="sun between clouds">
-                            <span>24&degC</span>
-                        </div>
-                        <p>08 Oct</p>
-                        <p>Wednesday</p>
+                        <p>Today</p>
+                        <img class="weather-icon" src="images/Clear.png" alt="">
+                        <p class="min">min 19&deg</p>
+                        <p class="max">max 26&deg</p>
                     </div>
                     <div class="forecast-item">
-                        <div class="icon-wrapper">
-                            <img src="https://openweathermap.org/img/wn/02d.png" alt="sun between clouds">
-                            <span>24&degC</span>
-                        </div>
-                        <p>09 Oct</p>
-                        <p>Thursday</p>
+                        <p class="weekday">Thursday</p>
+                        <img class="weather-icon" src="images/Clear.png" alt="">
+                        <p class="min">min 19&deg</p>
+                        <p class="max">max 26&deg</p>
                     </div>
                     <div class="forecast-item">
-                        <div class="icon-wrapper">
-                            <img src="https://openweathermap.org/img/wn/02d.png" alt="sun between clouds">
-                            <span>24&degC</span>
-                        </div>
-                        <p>10 Oct</p>
-                        <p>Friday</p>
+                        <p class="weekday">Thursday</p>
+                        <img class="weather-icon" src="images/Clear.png" alt="">
+                        <p class="min">min 19&deg</p>
+                        <p class="max">max 26&deg</p>
                     </div>
                     <div class="forecast-item">
-                        <div class="icon-wrapper">
-                            <img src="https://openweathermap.org/img/wn/02d.png" alt="sun between clouds">
-                            <span>24&degC</span>
-                        </div>
-                        <p>11 Oct</p>
-                        <p>Saturday</p>
+                        <p class="weekday">Thursday</p>
+                        <img class="weather-icon" src="images/Clear.png" alt="">
+                        <p class="min">min 19&deg</p>
+                        <p class="max">max 26&deg</p>
                     </div>
                     <div class="forecast-item">
-                        <div class="icon-wrapper">
-                            <img src="https://openweathermap.org/img/wn/02d.png" alt="sun between clouds">
-                            <span>24&degC</span>
-                        </div>
-                        <p>12 Oct</p>
-                        <p>Sunday</p>
+                        <p class="weekday">Thursday</p>
+                        <img class="weather-icon" src="images/Clear.png" alt="">
+                        <p class="min">min 19&deg</p>
+                        <p class="max">max 26&deg</p>
                     </div>
                     <div class="forecast-item">
-                        <div class="icon-wrapper">
-                            <img src="https://openweathermap.org/img/wn/02d.png" alt="sun between clouds">
-                            <span>24&degC</span>
-                        </div>
-                        <p>13 Oct</p>
-                        <p>Monday</p>
+                        <p class="weekday">Thursday</p>
+                        <img class="weather-icon" src="images/Clear.png" alt="">
+                        <p class="min">min 19&deg</p>
+                        <p class="max">max 26&deg</p>
                     </div>
                     <div class="forecast-item">
-                        <div class="icon-wrapper">
-                            <img src="https://openweathermap.org/img/wn/02d.png" alt="sun between clouds">
-                            <span>24&degC</span>
-                        </div>
-                        <p>14 Oct</p>
-                        <p>Tuesday</p>
+                        <p class="weekday">Thursday</p>
+                        <img class="weather-icon" src="images/Clear.png" alt="">
+                        <p class="min">min 19&deg</p>
+                        <p class="max">max 26&deg</p>
+                    </div>
+                    <div class="forecast-item">
+                        <p class="weekday">Thursday</p>
+                        <img class="weather-icon" src="images/Clear.png" alt="">
+                        <p class="min">min 19&deg</p>
+                        <p class="max">max 26&deg</p>
+                    </div>
+                    <div class="forecast-item">
+                        <p class="weekday">Thursday</p>
+                        <img class="weather-icon" src="images/Clear.png" alt="">
+                        <p class="min">min 19&deg</p>
+                        <p class="max">max 26&deg</p>
+                    </div>
+                    <div class="forecast-item">
+                        <p class="weekday">Thursday</p>
+                        <img class="weather-icon" src="images/Clear.png" alt="">
+                        <p class="min">min 19&deg</p>
+                        <p class="max">max 26&deg</p>
                     </div>
                 </div>
             </div>
@@ -199,7 +201,10 @@
                         </div>
                         <div class="card-item">
                             <i class="fa-light fa-compass fa-2x"></i>
-                            <h2 id="pressureVal">____ hPa</h2>
+                            <div>
+                                <h2 id="pressureVal">____</h2>
+                                <h2>hPa</h2>
+                            </div>
                         </div>
                     </div>
                     <div class="card">
@@ -226,7 +231,7 @@
                         </div>
                         <div class="card-item">
                             <i class="fa-light fa-temperature-list fa-2x"></i>
-                            <h2 id="feelsLikeVal">__ &degC</h2>
+                            <h2 id="feelsLikeVal">__ &deg</h2>
                         </div>
                     </div>
                     <div class="card">
