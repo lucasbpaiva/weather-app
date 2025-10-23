@@ -177,7 +177,11 @@ hr {
     align-items: center;
 }
 
-.hourly-forecast {
+.description {
+    margin-bottom: 10px;
+}
+
+.hourly-items-container {
     display: flex;
     justify-content: space-around;
     gap: 10px;
