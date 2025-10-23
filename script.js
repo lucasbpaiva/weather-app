@@ -22,9 +22,25 @@ async function getWeatherData(location) {
     const feelsLike   = weatherData.currentConditions.feelslike;
     const uvindex     = weatherData.currentConditions.uvindex;
     const days        = weatherData.days;
+    const currentHour = new Date().getHours();
+    const hours       = days[0].hours.slice(currentHour).concat(days[1].hours.slice(0, currentHour));
+    const description = weatherData.description;
 
     const processedData = { 
-        currentTemp, conditions, sunrise, sunset, visibility, windSpeed, pressure, humidity, feelsLike, uvindex, address, days, 
+        currentTemp, 
+        conditions, 
+        sunrise, 
+        sunset, 
+        visibility, 
+        windSpeed, 
+        pressure, 
+        humidity, 
+        feelsLike, 
+        uvindex, 
+        address, 
+        days, 
+        hours,
+        description,
     };
     console.log(weatherData);
 
@@ -59,6 +75,11 @@ function updateDisplay() {
     updateLocation();
     updateConditions();
     updateTenDayForecast();
+    updateHourlyForecast();
+
+    weatherData.then((data) => {
+        console.log(data.hours);
+    });
 }
 
 const sunriseDisplay = document.querySelector("#sunriseDisplay");
@@ -135,13 +156,17 @@ function updateUVindex() {
     });
 }
 
-const conditions = document.querySelector("#conditions");
+const conditionsDisplay = document.querySelector("#conditions");
 const largeWeatherIcon = document.querySelector(".weather-icon-large");
 
 function updateConditions() {
     weatherData.then((data) => {
-        conditions.textContent = data.conditions;
-        largeWeatherIcon.src = `images/${data.conditions}.png`;
+        let cond = data.conditions;
+        if (cond.includes(",")) {
+            cond = cond.split(",")[0];
+        }
+        conditionsDisplay.textContent = cond;
+        largeWeatherIcon.src = `images/${cond}.png`;
     });
 }
 
@@ -171,6 +196,39 @@ function updateTenDayForecast() {
             tempMax.textContent = data.days[index].tempmax + "˚";
 
             index++;
+        }
+    });
+}
+
+function updateHourlyForecast() {
+    const hourlyForecast = document.querySelector(".hourly-items-container");
+    hourlyForecast.replaceChildren(); //remove all child nodes
+
+    weatherData.then((data) => {
+        const description = document.querySelector(".description");
+        description.textContent = data.description;
+
+        for (let i = 0; i < 24; i++) {
+            const item = document.createElement("div");
+            item.classList.add("hour-item");
+
+            const hour = document.createElement("p");
+            hour.textContent = (i === 0) ? "Now" : data.hours[i].datetime.slice(0, 2);
+
+            const weatherIcon = document.createElement("img");
+            weatherIcon.classList.add("weather-icon");
+            let conditions = data.hours[i].conditions;
+            if (conditions.includes(",")) {
+                conditions = conditions.split(",")[0];
+            }
+            weatherIcon.src = `images/${conditions}.png`;
+            weatherIcon.alt = conditions;
+
+            const temperature = document.createElement("p");
+            temperature.textContent = `${data.hours[i].temp}˚`;
+
+            item.append(hour, weatherIcon, temperature);
+            hourlyForecast.appendChild(item);
         }
     });
 }
