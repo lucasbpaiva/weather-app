@@ -39,8 +39,8 @@ hr {
 }
 
 .header {
-    position: sticky;
-    /* top: 0; */
+    /* position: sticky;
+    top: 0; */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -75,11 +75,10 @@ hr {
     background-color: var(--bg-color2);
     padding: 15px;
     border-radius: 15px;
-    margin-bottom: 15px;
 }
 
 .card h2 {
-    font-size: 32px;
+    font-size: 2em;
     font-weight: 500;
     margin: 5px 0;
 }
@@ -94,14 +93,26 @@ hr {
 
 .weather-data {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 3fr;
+    grid-template-areas: 
+    "current hourly"
+    "ten-day  highlights";
+    gap: 15px;
+}
+
+.current {
+    grid-area: current;
 }
 
 .current-weather {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.ten-day {
+    grid-area: ten-day;
 }
 
 .forecast-item {
@@ -112,28 +123,31 @@ hr {
     margin-bottom: 15px;
 }
 
-.weather-right {
+/* .weather-right {
     grid-column: span 3;
 }
 
 .weather-right h2 {
     margin-bottom: 10px;
+} */
+
+.hourly-forecast {
+    grid-area: hourly;
+    overflow: scroll;
 }
 
 .highlights {
+    grid-area: highlights;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    column-gap: 15px;
-}
-
-.card:nth-of-type(1) {
-    grid-row: span 2;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 15px;
 }
 
 .highlights .card {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     gap: 10px;
 }
 
@@ -174,7 +188,7 @@ hr {
 .card-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
 }
 
 .description {
