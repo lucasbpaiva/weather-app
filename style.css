@@ -80,7 +80,6 @@ hr {
 .card h2 {
     font-size: 2em;
     font-weight: 500;
-    margin: 5px 0;
 }
 
 .weather-icon-large {
@@ -101,14 +100,18 @@ hr {
     gap: 15px;
 }
 
-.current {
-    grid-area: current;
-}
-
 .current-weather {
+    grid-area: current;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.current-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
 }
 
 .ten-day {
@@ -204,6 +207,10 @@ hr {
     justify-content: space-around;
     gap: 10px;
     overflow: scroll;
+}
+
+.hourly-items-container::-webkit-scrollbar{
+    height: 0;
 }
 
 .hour-item {
