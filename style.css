@@ -4,11 +4,12 @@
     --text-color: #fff;
     --dimmed-text: #999;
     --accent-color: #ea6e4b;
-    --aqi-1: #d4e157;
-    --aqi-2: #ffee58;
-    --aqi-3: #ffca28;
-    --aqi-4: #ff7043;
-    --aqi-5: #ef5350;
+    --aqi-1: #01e601;
+    --aqi-2: #fffb00;
+    --aqi-3: #ff7e00;
+    --aqi-4: #fd2601;
+    --aqi-5: #9b174d;
+    --aqi-6: #800f1f;
 }
 
 * {
@@ -160,8 +161,41 @@ hr {
 
 .card-head {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
     justify-content: space-between;
+    align-items: flex-start;
     margin-bottom: 10px;
+}
+
+.air-condition {
+    color: #000;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.aqi-1 {
+    background-color: var(--aqi-1);
+}
+
+.aqi-2 {
+    background-color: var(--aqi-2);
+}
+
+.aqi-3 {
+    background-color: var(--aqi-3);
+}
+
+.aqi-4 {
+    background-color: var(--aqi-4);
+}
+
+.aqi-5 {
+    background-color: var(--aqi-5);
+}
+
+.aqi-6 {
+    background-color: var(--aqi-6);
 }
 
 .sunrise-sunset {
