@@ -1,7 +1,7 @@
 const APIkey    = "Q6MWAXWQTYL4HW4QPLF86VA5M";
 let unitGroup   = "metric";
 const urlBase   = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline";
-let queryParams = `unitGroup=${unitGroup}&key=${APIkey}&contentType=json`;
+let queryParams = `unitGroup=${unitGroup}&elements=add:aqius&key=${APIkey}&contentType=json`;
 let weatherData;
 
 async function getWeatherData(location) {
@@ -11,6 +11,7 @@ async function getWeatherData(location) {
     const weatherData = await response.json();
 
     const address     = weatherData.resolvedAddress;
+    const aqi         = weatherData.currentConditions.aqius;
     const currentTemp = weatherData.currentConditions.temp;
     const conditions  = weatherData.currentConditions.conditions;
     const sunrise     = weatherData.currentConditions.sunrise.slice(0, -3);
@@ -27,6 +28,7 @@ async function getWeatherData(location) {
     const description = weatherData.description;
 
     const processedData = { 
+        aqi,
         currentTemp, 
         conditions, 
         sunrise, 
@@ -64,6 +66,7 @@ searchBtn.addEventListener("click", () => {
 function updateDisplay() {
     weatherData = getWeatherData(cityInput.value); // This is a promise!
     cityInput.value = "";
+    updateAQindex();
     updateSunriseSunset();
     updateWindSpeed();
     updateVisibility();
@@ -82,6 +85,42 @@ function updateDisplay() {
     });
 }
 
+const aqindex = document.querySelector("#aqiVal");
+const airCondition = document.querySelector(".air-condition")
+
+function updateAQindex() {
+    weatherData.then((data) => {
+        const aqiValue = data.aqi;
+        aqindex.textContent = aqiValue;
+
+        if (aqiValue <= 50) {
+            airCondition.textContent = "Good";
+            airCondition.className = "air-condition"; //keep only this class and remove others
+            airCondition.classList.add("aqi-1");
+        } else if (aqiValue <= 100) {
+            airCondition.textContent = "Moderate";
+            airCondition.className = "air-condition"; //keep only this class and remove others
+            airCondition.classList.add("aqi-2");
+        } else if (aqiValue <= 150) {
+            airCondition.textContent = "Unhealthy for sensitive groups";
+            airCondition.className = "air-condition"; //keep only this class and remove others
+            airCondition.classList.add("aqi-3");
+        } else if (aqiValue <= 200) {
+            airCondition.textContent = "Unhealthy";
+            airCondition.className = "air-condition"; //keep only this class and remove others
+            airCondition.classList.add("aqi-4");
+        } else if (aqiValue <= 300) {
+            airCondition.textContent = "Very unhealthy";
+            airCondition.className = "air-condition"; //keep only this class and remove others
+            airCondition.classList.add("aqi-5");
+        } else {
+            airCondition.textContent = "Hazardous";
+            airCondition.className = "air-condition"; //keep only this class and remove others
+            airCondition.classList.add("aqi-6");
+        }
+    });
+}
+
 const sunriseDisplay = document.querySelector("#sunriseDisplay");
 const sunsetDisplay  = document.querySelector("#sunsetDisplay");
 
@@ -96,7 +135,7 @@ const windSpeedVal = document.querySelector("#windSpeedVal");
 
 function updateWindSpeed() {
     weatherData.then((data) => {
-        windSpeedVal.textContent = data.windSpeed + " km/h";
+        windSpeedVal.textContent = data.windSpeed;
     });
 }
 
