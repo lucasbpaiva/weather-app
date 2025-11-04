@@ -287,3 +287,30 @@ function updateHourlyForecast() {
         }
     });
 }
+
+const switchButton   = document.querySelector('.switch-button');
+const switchBtnRight = document.querySelector('.switch-button-case.right');
+const switchBtnLeft  = document.querySelector('.switch-button-case.left');
+const activeSwitch   = document.querySelector('.active');
+
+function switchLeft(){
+	switchBtnRight.classList.remove('active-case');
+	switchBtnLeft.classList.add('active-case');
+	activeSwitch.style.left = '0%';
+	activeSwitch.style.borderRadius = "20px 0 0 20px";
+}
+
+function switchRight(){
+	switchBtnRight.classList.add('active-case');
+	switchBtnLeft.classList.remove('active-case');
+	activeSwitch.style.left = '50%';
+	activeSwitch.style.borderRadius = "0 20px 20px 0";
+}
+
+switchBtnLeft.addEventListener('click', function(){
+	switchLeft();
+}, false);
+
+switchBtnRight.addEventListener('click', function(){
+	switchRight();
+}, false);
