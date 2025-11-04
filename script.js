@@ -23,7 +23,8 @@ async function getWeatherData(location) {
     const feelsLike   = weatherData.currentConditions.feelslike;
     const uvindex     = weatherData.currentConditions.uvindex;
     const days        = weatherData.days;
-    const currentHour = new Date().getHours();
+    const tzoffset    = weatherData.tzoffset;
+    const currentHour = getCurrentHourInLocation(tzoffset);
     const hours       = days[0].hours.slice(currentHour).concat(days[1].hours.slice(0, currentHour));
     const description = weatherData.description;
 
@@ -40,13 +41,20 @@ async function getWeatherData(location) {
         feelsLike, 
         uvindex, 
         address, 
-        days, 
+        days,
+        currentHour, 
         hours,
         description,
     };
     console.log(weatherData);
 
     return processedData;
+}
+
+function getCurrentHourInLocation(offset) {
+    const currentUTCHour = new Date().getUTCHours();
+    const currentLocal = (currentUTCHour + offset + 24) % 24;
+    return currentLocal;
 }
 
 const cityInput = document.querySelector("#cityInput");
@@ -205,6 +213,10 @@ function updateConditions() {
             cond = cond.split(",")[0];
         }
         conditionsDisplay.textContent = cond;
+        const currentHour = data.currentHour;
+        if ((cond === "Clear" || cond === "Partially cloudy") && (currentHour < 6 || currentHour >= 18)) {
+            cond += "-night";
+        }
         largeWeatherIcon.src = `images/${cond}.png`;
     });
 }
@@ -252,13 +264,17 @@ function updateHourlyForecast() {
             item.classList.add("hour-item");
 
             const hour = document.createElement("p");
-            hour.textContent = (i === 0) ? "Now" : data.hours[i].datetime.slice(0, 2);
+            const datetimeHour = data.hours[i].datetime.slice(0, 2);
+            hour.textContent = (i === 0) ? "Now" : datetimeHour;
 
             const weatherIcon = document.createElement("img");
             weatherIcon.classList.add("weather-icon");
             let conditions = data.hours[i].conditions;
             if (conditions.includes(",")) {
                 conditions = conditions.split(",")[0];
+            }
+            if ((conditions === "Clear" || conditions === "Partially cloudy") && (datetimeHour < 6 || datetimeHour >= 18)) {
+                conditions += "-night";
             }
             weatherIcon.src = `images/${conditions}.png`;
             weatherIcon.alt = conditions;
