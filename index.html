@@ -13,10 +13,17 @@
     <div class="container">
         <div class="header">
             <h2>Weather</h2>
-            <div class="weather-input">
-                <input type="search" name="city" id="cityInput" placeholder="Enter city name">
-                <button type="button" id="searchBtn"><i class="fa-regular fa-search"></i> Search</button>
-                <button type="button" id="locationBtn"><i class="fa fa-location-dot"></i> Current Location</button>
+            <div class="header-right">
+                <div class="weather-input">
+                    <input type="search" name="city" id="cityInput" placeholder="Enter city name">
+                    <button type="button" id="searchBtn"><i class="fa-regular fa-search"></i> Search</button>
+                    <button type="button" id="locationBtn"><i class="fa fa-location-dot"></i> Current Location</button>
+                </div>
+                <div class="switch-button">
+                    <span class="active"></span>
+                    <button class="switch-button-case left active-case">&degC</button>
+                    <button class="switch-button-case right">&degF</button>
+                </div>
             </div>
         </div>
         <div class="weather-data">
