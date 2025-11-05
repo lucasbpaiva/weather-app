@@ -67,7 +67,7 @@ function getCurrentHourInLocation(offset) {
 const cityInput = document.querySelector("#cityInput");
 const searchBtn = document.querySelector("#searchBtn");
 
-cityInput.addEventListener("change", () => {
+cityInput.addEventListener("input", () => {
     city = cityInput.value;
 });
 
@@ -249,7 +249,7 @@ const largeWeatherIcon = document.querySelector(".weather-icon-large");
 
 function updateConditions() {
     weatherData.then((data) => {
-        const cond = data.conditions;
+        let cond = data.conditions;
         conditionsDisplay.textContent = cond;
         const currentHour = data.currentHour;
         if ((cond === "Clear" || cond === "Partially cloudy") && (currentHour < 6 || currentHour >= 18)) {
