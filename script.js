@@ -28,9 +28,12 @@ async function getWeatherData(location) {
     const hours       = days[0].hours.slice(currentHour).concat(days[1].hours.slice(0, currentHour));
     const description = weatherData.description;
     let conditions    = weatherData.currentConditions.conditions;
-    if (conditions.includes(",")) {
-            conditions = conditions.split(",")[0];
+    if (conditions.includes(",")) { //ex: "Rain, Overcast"
+        conditions = conditions.split(",")[0];
+        if (conditions.includes("/")) { //ex: "Freezing Drizzle/Freezing Rain"
+            conditions = conditions.split("/")[1];
         }
+    }
 
     const processedData = { 
         aqi,
@@ -273,6 +276,9 @@ function updateTenDayForecast() {
             let dailyConditions = data.days[index].conditions;
             if (dailyConditions.includes(",")) {
                 dailyConditions = dailyConditions.split(",")[0];
+                if (dailyConditions.includes("/")) { //ex: "Freezing Drizzle/Freezing Rain"
+                    dailyConditions = dailyConditions.split("/")[1];
+                }
             }
             weatherIcon.src = `images/${dailyConditions}.png`;
 
@@ -307,6 +313,9 @@ function updateHourlyForecast() {
             let conditions = data.hours[i].conditions;
             if (conditions.includes(",")) {
                 conditions = conditions.split(",")[0];
+                if (conditions.includes("/")) { //ex: "Freezing Drizzle/Freezing Rain"
+                    conditions = conditions.split("/")[1];
+                }
             }
             if ((conditions === "Clear" || conditions === "Partially cloudy") && (datetimeHour < 6 || datetimeHour >= 18)) {
                 conditions += "-night";
