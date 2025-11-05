@@ -13,7 +13,7 @@ async function getWeatherData(location) {
 
     const address     = weatherData.resolvedAddress;
     const aqi         = weatherData.currentConditions.aqius;
-    const currentTemp = weatherData.currentConditions.temp;
+    const currentTemp = Math.round(weatherData.currentConditions.temp);
     const conditions  = weatherData.currentConditions.conditions;
     const sunrise     = weatherData.currentConditions.sunrise.slice(0, -3);
     const sunset      = weatherData.currentConditions.sunset.slice(0, -3);
@@ -21,7 +21,7 @@ async function getWeatherData(location) {
     const windSpeed   = weatherData.currentConditions.windspeed;
     const pressure    = weatherData.currentConditions.pressure;
     const humidity    = weatherData.currentConditions.humidity;
-    const feelsLike   = weatherData.currentConditions.feelslike;
+    const feelsLike   = Math.round(weatherData.currentConditions.feelslike);
     const uvindex     = weatherData.currentConditions.uvindex;
     const days        = weatherData.days;
     const tzoffset    = weatherData.tzoffset;
@@ -250,8 +250,8 @@ function updateTenDayForecast() {
 
             const tempMin = item.querySelector(".min");
             const tempMax = item.querySelector(".max");
-            tempMin.textContent = data.days[index].tempmin + "˚";
-            tempMax.textContent = data.days[index].tempmax + "˚";
+            tempMin.textContent = Math.round(data.days[index].tempmin) + "˚";
+            tempMax.textContent = Math.round(data.days[index].tempmax) + "˚";
 
             index++;
         }
@@ -287,7 +287,7 @@ function updateHourlyForecast() {
             weatherIcon.alt = conditions;
 
             const temperature = document.createElement("p");
-            temperature.textContent = `${data.hours[i].temp}˚`;
+            temperature.textContent = Math.round(data.hours[i].temp) + "˚";
 
             item.append(hour, weatherIcon, temperature);
             hourlyForecast.appendChild(item);
