@@ -1,6 +1,10 @@
 :root {
     --bg-color1: #212529;
     --bg-color2: #2a2b2d;
+    --bg-gray: #97a7b8;
+    --card-gray: #8698a8;
+    --bg-blue: #78bbe5;
+    --card-blue: #4699cb;
     --text-color: #fff;
     --dimmed-text: #999;
     --accent-color: #ea6e4b;
