@@ -14,7 +14,6 @@ async function getWeatherData(location) {
     const address     = weatherData.resolvedAddress;
     const aqi         = weatherData.currentConditions.aqius;
     const currentTemp = Math.round(weatherData.currentConditions.temp);
-    const conditions  = weatherData.currentConditions.conditions;
     const sunrise     = weatherData.currentConditions.sunrise.slice(0, -3);
     const sunset      = weatherData.currentConditions.sunset.slice(0, -3);
     const visibility  = weatherData.currentConditions.visibility;
@@ -28,6 +27,10 @@ async function getWeatherData(location) {
     const currentHour = getCurrentHourInLocation(tzoffset);
     const hours       = days[0].hours.slice(currentHour).concat(days[1].hours.slice(0, currentHour));
     const description = weatherData.description;
+    let conditions    = weatherData.currentConditions.conditions;
+    if (conditions.includes(",")) {
+            conditions = conditions.split(",")[0];
+        }
 
     const processedData = { 
         aqi,
@@ -79,6 +82,7 @@ searchBtn.addEventListener("click", () => {
 function updateDisplay() {
     weatherData = getWeatherData(city); // This is a promise!
     cityInput.value = "";
+    updateBgColor();
     updateAQindex();
     updateSunriseSunset();
     updateWindSpeed();
@@ -95,6 +99,33 @@ function updateDisplay() {
 
     weatherData.then((data) => {
         console.log(data.hours);
+    });
+}
+
+const htmlBody = document.querySelector("body");
+const cards = document.querySelectorAll(".card");
+
+function updateBgColor() {
+    weatherData.then((data) => {
+        if (data.currentHour < 6 || data.currentHour >= 18) {
+            htmlBody.style.backgroundColor = "var(--bg-color1)";
+            cityInput.style.backgroundColor = "var(--bg-color2)";
+            cards.forEach((card) => {
+                card.style.backgroundColor = "var(--bg-color2)";
+            });
+        } else if (data.conditions === "Clear") {
+            htmlBody.style.backgroundColor = "var(--bg-blue)";
+            cityInput.style.backgroundColor = "var(--card-blue)";
+            cards.forEach((card) => {
+                card.style.backgroundColor = "var(--card-blue)";
+            });
+        } else {
+            htmlBody.style.backgroundColor = "var(--bg-gray)";
+            cityInput.style.backgroundColor = "var(--card-gray)";
+            cards.forEach((card) => {
+                card.style.backgroundColor = "var(--card-gray)";
+            });
+        }
     });
 }
 
@@ -215,10 +246,7 @@ const largeWeatherIcon = document.querySelector(".weather-icon-large");
 
 function updateConditions() {
     weatherData.then((data) => {
-        let cond = data.conditions;
-        if (cond.includes(",")) {
-            cond = cond.split(",")[0];
-        }
+        const cond = data.conditions;
         conditionsDisplay.textContent = cond;
         const currentHour = data.currentHour;
         if ((cond === "Clear" || cond === "Partially cloudy") && (currentHour < 6 || currentHour >= 18)) {
