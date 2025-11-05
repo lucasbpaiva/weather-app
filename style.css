@@ -183,6 +183,10 @@ hr {
     margin-bottom: 15px;
 }
 
+.forecast-item .min, .forecast-item .max {
+    text-align: center;
+}
+
 .forecast-item:last-of-type {
     margin-bottom: 0;
 }
