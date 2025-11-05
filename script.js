@@ -3,6 +3,7 @@ let unitGroup   = "metric";
 const urlBase   = "https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline";
 let queryParams = `unitGroup=${unitGroup}&elements=add:aqius&key=${APIkey}&contentType=json`;
 let weatherData;
+let city;
 
 async function getWeatherData(location) {
     let url = `${urlBase}/${location}?${queryParams}`;
@@ -60,6 +61,10 @@ function getCurrentHourInLocation(offset) {
 const cityInput = document.querySelector("#cityInput");
 const searchBtn = document.querySelector("#searchBtn");
 
+cityInput.addEventListener("change", () => {
+    city = cityInput.value;
+});
+
 cityInput.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
         updateDisplay();
@@ -72,7 +77,7 @@ searchBtn.addEventListener("click", () => {
 });
 
 function updateDisplay() {
-    weatherData = getWeatherData(cityInput.value); // This is a promise!
+    weatherData = getWeatherData(city); // This is a promise!
     cityInput.value = "";
     updateAQindex();
     updateSunriseSunset();
@@ -143,7 +148,8 @@ const windSpeedVal = document.querySelector("#windSpeedVal");
 
 function updateWindSpeed() {
     weatherData.then((data) => {
-        windSpeedVal.textContent = data.windSpeed;
+        let unit = unitGroup === "metric" ? " km/h" : " mi/h";
+        windSpeedVal.textContent = data.windSpeed + unit;
     });
 }
 
@@ -151,7 +157,8 @@ const visibility = document.querySelector("#visibilityVal");
 
 function updateVisibility() {
     weatherData.then((data) => {
-        visibility.textContent = data.visibility + " km";
+        let unit = unitGroup === "metric" ? " km" : " mi";
+        visibility.textContent = data.visibility + unit;
     });
 }
 
@@ -288,29 +295,39 @@ function updateHourlyForecast() {
     });
 }
 
+// Celsius/Fahrenheit switch logic ----------------------------------------------
+
 const switchButton   = document.querySelector('.switch-button');
 const switchBtnRight = document.querySelector('.switch-button-case.right');
 const switchBtnLeft  = document.querySelector('.switch-button-case.left');
 const activeSwitch   = document.querySelector('.active');
 
-function switchLeft(){
+function switchToCelsius(){
 	switchBtnRight.classList.remove('active-case');
 	switchBtnLeft.classList.add('active-case');
 	activeSwitch.style.left = '0%';
 	activeSwitch.style.borderRadius = "20px 0 0 20px";
+
+    unitGroup = "metric";
+    queryParams = `unitGroup=${unitGroup}&elements=add:aqius&key=${APIkey}&contentType=json`;
+    updateDisplay();
 }
 
-function switchRight(){
+function switchToFahrenheit(){
 	switchBtnRight.classList.add('active-case');
 	switchBtnLeft.classList.remove('active-case');
 	activeSwitch.style.left = '50%';
 	activeSwitch.style.borderRadius = "0 20px 20px 0";
+
+    unitGroup = "us";
+    queryParams = `unitGroup=${unitGroup}&elements=add:aqius&key=${APIkey}&contentType=json`;
+    updateDisplay();
 }
 
 switchBtnLeft.addEventListener('click', function(){
-	switchLeft();
+	switchToCelsius();
 }, false);
 
 switchBtnRight.addEventListener('click', function(){
-	switchRight();
+	switchToFahrenheit();
 }, false);
