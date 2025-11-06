@@ -14,7 +14,7 @@ async function getWeatherData(location) {
     const response    = await fetch(url);
     const weatherData = await response.json();
 
-    const address     = weatherData.resolvedAddress;
+    const address     = capitalizeWords(weatherData.resolvedAddress);
     const aqi         = weatherData.currentConditions.aqius;
     const currentTemp = Math.round(weatherData.currentConditions.temp);
     const sunrise     = weatherData.currentConditions.sunrise.slice(0, -3);
@@ -67,6 +67,13 @@ function getCurrentHourInLocation(offset) {
     const currentUTCHour = new Date().getUTCHours();
     const currentLocal = (currentUTCHour + offset + 24) % 24;
     return currentLocal;
+}
+
+function capitalizeWords(sentence) {
+    return sentence
+        .split(" ")
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
 }
 
 const cityInput = document.querySelector("#cityInput");
