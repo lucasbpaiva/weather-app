@@ -219,11 +219,6 @@ hr {
     margin-bottom: 0;
 }
 
-.hourly-forecast {
-    grid-area: hourly;
-    overflow: scroll;
-}
-
 .highlights {
     grid-area: highlights;
     /* display: grid;
@@ -327,15 +322,56 @@ hr {
     margin-bottom: 10px;
 }
 
+.hourly-forecast {
+    grid-area: hourly;
+    overflow: hidden;
+    position: relative; /* Set context for absolute button positioning */
+    -ms-overflow-style: none; 
+    scrollbar-width: none;
+}
+
+.hourly-forecast::-webkit-scrollbar {
+    display: none;
+}
+
+.scroll-btn {
+    position: absolute;
+    top: 85px;
+    width: 15px; /* Slightly wider to give more click area */
+    background: none;
+    color: var(--text-color);
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+    border: none;
+
+    /* Center the icon */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.left-btn {
+    left: 0;
+}
+
+.right-btn {
+    right: 0;
+}
+
+.hourly-forecast:hover .scroll-btn {
+    opacity: 1;
+}
+
 .hourly-items-container {
     display: flex;
     justify-content: space-around;
     gap: 10px;
-    overflow: scroll;
-}
-
-.hourly-items-container::-webkit-scrollbar{
-    height: 0;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
 }
 
 .hour-item {

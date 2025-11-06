@@ -14,7 +14,7 @@ async function getWeatherData(location) {
     const response    = await fetch(url);
     const weatherData = await response.json();
 
-    const address     = capitalizeWords(weatherData.resolvedAddress);
+    const address     = capitalizeWords(weatherData.address);
     const aqi         = weatherData.currentConditions.aqius;
     const currentTemp = Math.round(weatherData.currentConditions.temp);
     const sunrise     = weatherData.currentConditions.sunrise.slice(0, -3);
@@ -422,3 +422,18 @@ async function getAddressFromCoords(lat, lon) {
         return `${lat},${lon}`;
     }
 }
+
+// scroll button for hourly forecast
+
+const hourlyItemsContainer = document.querySelector(".hourly-items-container");
+const scrollLeftBtn = document.querySelector("#scrollLeftBtn");
+const scrollRightBtn = document.querySelector("#scrollRightBtn");
+const scrollAmount = 300; // Scroll distance in pixels
+
+scrollLeftBtn.addEventListener("click", () => {
+    hourlyItemsContainer.scrollBy(-scrollAmount, 0);
+});
+
+scrollRightBtn.addEventListener("click", () => {
+    hourlyItemsContainer.scrollBy(scrollAmount, 0);
+});
