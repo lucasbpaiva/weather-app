@@ -16,7 +16,6 @@ async function getWeatherData(location) {
 
     const address     = capitalizeWords(weatherData.address);
     const aqi         = weatherData.currentConditions.aqius;
-    const currentTemp = Math.round(weatherData.currentConditions.temp);
     const sunrise     = weatherData.currentConditions.sunrise.slice(0, -3);
     const sunset      = weatherData.currentConditions.sunset.slice(0, -3);
     const visibility  = weatherData.currentConditions.visibility;
@@ -29,6 +28,7 @@ async function getWeatherData(location) {
     const tzoffset    = weatherData.tzoffset;
     const currentHour = getCurrentHourInLocation(tzoffset);
     const hours       = days[0].hours.slice(currentHour).concat(days[1].hours.slice(0, currentHour));
+    const currentTemp = Math.round(hours[0].temp);
     const description = weatherData.description;
     let conditions    = weatherData.currentConditions.conditions;
     if (conditions.includes(",")) { //ex: "Rain, Overcast"
