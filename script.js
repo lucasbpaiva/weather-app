@@ -56,7 +56,6 @@ async function getWeatherData(location) {
         hours,
         description,
     };
-    console.log(weatherData);
 
     loadingComponent.style.display = "none";
 
@@ -111,10 +110,6 @@ function updateDisplay() {
     updateConditions();
     updateTenDayForecast();
     updateHourlyForecast();
-
-    weatherData.then((data) => {
-        console.log(data.hours);
-    });
 }
 
 const htmlBody = document.querySelector("body");
