@@ -368,3 +368,45 @@ switchBtnLeft.addEventListener('click', function(){
 switchBtnRight.addEventListener('click', function(){
 	switchToFahrenheit();
 }, false);
+
+// geolocation --------------------------------------------------------------------------------------
+const locationBtn = document.querySelector("#locationBtn");
+
+locationBtn.addEventListener("click", () => {
+    if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            city = await getAddressFromCoords(lat, lon);
+            updateDisplay();
+        });
+    } else {
+        alert("It seems geolocation is not available in your browser.");
+    }
+});
+
+async function getAddressFromCoords(lat, lon) {
+    let nominatimUrl = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`;
+
+    try {
+        const response = await fetch(nominatimUrl);
+        if (!response.ok) {
+            throw new Error(`Reverse Geocoding failed with status: ${response.status}`);
+        }
+        const data = await response.json();
+
+        const address = data.address;
+        if (address.city) return address.city;
+        if (address.town) return address.town;
+        if (address.village) return address.village;
+
+        // Fallback to full display name e.g. "London, Greater London, England, SW1A 2DU, United Kingdom"
+        return data.display_name.split(",")[0] || "Your Location";
+
+    } catch (error) {
+        console.error("Reverse geocoding error: ", error);
+        // Fallback to coordinates on error
+        return `${lat},${lon}`;
+    }
+}
