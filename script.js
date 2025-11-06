@@ -4,8 +4,11 @@ const urlBase   = "https://weather.visualcrossing.com/VisualCrossingWebServices/
 let queryParams = `unitGroup=${unitGroup}&elements=add:aqius&key=${APIkey}&contentType=json`;
 let weatherData;
 let city;
+const loadingComponent = document.querySelector("#loadingOverlay");
 
 async function getWeatherData(location) {
+    loadingComponent.style.display = "flex";
+
     let url = `${urlBase}/${location}?${queryParams}`;
 
     const response    = await fetch(url);
@@ -54,6 +57,8 @@ async function getWeatherData(location) {
         description,
     };
     console.log(weatherData);
+
+    loadingComponent.style.display = "none";
 
     return processedData;
 }

@@ -5,6 +5,7 @@
     --card-gray: #8698a8;
     --bg-blue: #78bbe5;
     --card-blue: #4699cb;
+    --loading-bg: #ffffff99;
     --text-color: #fff;
     --dimmed-text: #999;
     --accent-color: #ea6e4b;
@@ -32,6 +33,29 @@ body {
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+}
+
+#loadingOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--loading-bg); /* Semi-transparent white */
+    /* display will be set to flex in the script */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it's on top */
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
 }
 
 .container {
