@@ -2,6 +2,10 @@
 
 This is a dynamic, modern weather dashboard built with HTML, CSS, and plain JavaScript. I developed this project to deepen my understanding of asynchronous JavaScript concepts, specifically **`fetch` requests**, **Promises**, and **`async`/`await` functions**, which are critical skills for any web development role.
 
+You can see the project live [here](https://lucasbpaiva.github.io/weather-app/).
+
+![demo](./images/weather-app-demo.png)
+
 ## ✨ Key Features
 
   * **Real-time Weather Data:** Fetches current conditions, daily forecasts, and hourly forecasts from the Visual Crossing Weather API.
